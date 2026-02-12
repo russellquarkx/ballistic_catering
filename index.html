@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ballistic Pizza — Catering Quote</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════
+     BRAND TOKENS (from Brand Bible)
+     ═══════════════════════════════════════════ */
+  :root {
+    /* Lead Colors */
+    --blackout: #1A1919;
+    --supernova-white: #F9F9F9;
+    
+    /* Accent Colors */
+    --pink-tomato: #F26F65;
+    --portal-green: #71AE5E;
+    --cold-ice: #97DDE4;
+    --warm-cheese: #FBDC8A;
+    --gold: #E7B632;
+    --blue: #44A6B0;
+    
+    /* Supporting */
+    --green-dark: #48BD32;
+    
+    /* Utility */
+    --gray-600: #666666;
+    --gray-400: #999999;
+    --gray-200: #E0E0E0;
+    --gray-100: #F0F0F0;
+    --gray-50: #F7F7F7;
+    
+    /* Typography - Brand specifies Aeonik Bold for headers, Work Sans Regular for body */
+    --font-body: 'Work Sans', -apple-system, sans-serif;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #E0E0E0;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* A4 proportions */
+  .page {
+    width: 595px;
+    min-height: 842px;
+    background: var(--supernova-white);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.15);
+  }
+
+  /* ═══════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════ */
+  .header {
+    background: var(--blackout);
+    padding: 24px 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--pink-tomato);
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .logo-container img {
+    height: 52px;
+    width: auto;
+  }
+
+  .header-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 4px;
+  }
+
+  .quote-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--pink-tomato);
+    text-transform: uppercase;
+  }
+
+  .quote-meta {
+    font-size: 9px;
+    color: var(--gray-400);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ═══════════════════════════════════════════
+     INFO SECTION
+     ═══════════════════════════════════════════ */
+  .info-section {
+    padding: 24px 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .info-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .info-left .client-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--blackout);
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+
+  .info-left .client-role {
+    font-size: 10px;
+    color: var(--gray-600);
+    font-weight: 400;
+  }
+
+  .info-right {
+    text-align: right;
+  }
+
+  .info-right .event-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blackout);
+    margin-bottom: 4px;
+  }
+
+  .info-right .event-detail {
+    font-size: 9.5px;
+    color: var(--gray-600);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .event-detail .separator {
+    color: var(--gray-200);
+    margin: 0 4px;
+  }
+
+  /* ═══════════════════════════════════════════
+     DIVIDER
+     ═══════════════════════════════════════════ */
+  .divider {
+    margin: 0 32px;
+    border: none;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  /* ═══════════════════════════════════════════
+     TABLE
+     ═══════════════════════════════════════════ */
+  .table-section {
+    padding: 20px 32px 0;
+  }
+
+  .table-header {
+    display: grid;
+    grid-template-columns: 1fr 50px 80px 90px;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--blackout);
+    margin-bottom: 4px;
+  }
+
+  .table-header span {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    text-transform: uppercase;
+  }
+
+  .table-header span:last-child {
+    text-align: right;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 1fr 50px 80px 90px;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    align-items: center;
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .item-name {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--blackout);
+  }
+
+  .item-qty, .item-unit {
+    font-size: 10.5px;
+    color: var(--gray-600);
+    font-weight: 400;
+  }
+
+  .item-subtotal {
+    font-size: 10.5px;
+    color: var(--blackout);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .item-free {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--portal-green);
+    text-align: right;
+    letter-spacing: 0.5px;
+  }
+
+  .item-comp {
+    color: var(--gray-400);
+    font-style: italic;
+  }
+
+  /* ═══════════════════════════════════════════
+     TOTAL
+     ═══════════════════════════════════════════ */
+  .total-section {
+    padding: 8px 32px 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .total-line {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding-top: 12px;
+    border-top: 2px solid var(--blackout);
+    min-width: 200px;
+    justify-content: space-between;
+  }
+
+  .total-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--blackout);
+    text-transform: uppercase;
+  }
+
+  .total-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--blackout);
+    letter-spacing: -0.5px;
+  }
+
+  /* ═══════════════════════════════════════════
+     INCLUDED BOX
+     ═══════════════════════════════════════════ */
+  .included-section {
+    margin: 24px 32px 0;
+    background: var(--gray-50);
+    border-radius: 4px;
+    padding: 16px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .included-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--pink-tomato);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .included-title {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: var(--blackout);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .included-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .included-item {
+    font-size: 9.5px;
+    color: var(--gray-600);
+    font-weight: 400;
+    line-height: 1.4;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .included-item .bullet {
+    color: var(--pink-tomato);
+    font-size: 14px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: -1px;
+  }
+
+  /* ═══════════════════════════════════════════
+     TERMS
+     ═══════════════════════════════════════════ */
+  .terms-section {
+    padding: 20px 32px 0;
+  }
+
+  .terms-title {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: var(--blackout);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .terms-items {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .terms-item {
+    font-size: 9px;
+    color: var(--gray-600);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ */
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--blackout);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--pink-tomato);
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-text {
+    font-size: 8px;
+    color: var(--gray-400);
+    font-weight: 400;
+  }
+
+  .footer-text .sep {
+    color: var(--gray-600);
+    margin: 0 6px;
+  }
+
+  .footer-logo img {
+    height: 28px;
+    width: auto;
+    opacity: 0.5;
+  }
+
+  /* ═══════════════════════════════════════════
+     SPEC OVERLAY (toggle with ?specs)
+     ═══════════════════════════════════════════ */
+  .spec-note {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--blackout);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 11px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    line-height: 1.6;
+    max-width: 280px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .spec-note strong {
+    color: var(--pink-tomato);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-container">
+        <!-- In Figma: Place the Ballistic Pizza SVG logo here, white version -->
+        <svg width="180" height="52" viewBox="0 0 721 452" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M504.435 136.218H467.898V115.295C467.997 111.137 465.748 110.004 464.633 109.638C453.239 105.9 455.229 130.9 457.441 136.432C461.117 145.631 486.591 161.923 494.612 171.417C506.969 186.04 505.747 211.674 504.48 230.188C503.695 241.725 498.904 256.545 486.725 260.48C488.652 262.407 491.623 264.825 494.478 270.374C502.258 285.48 502.348 311.417 490.151 323.614C474.778 338.988 425.276 336.552 421.556 336.552C421.556 336.552 421.618 311.266 421.618 310.73H446.065C450.268 310.784 455.862 309.579 458.119 308.571C471.235 302.718 473.948 287.63 460.805 280.876C453.471 277.102 421.556 270.062 421.556 259.543V224.371H456.317C456.629 229.412 454.185 239.637 461.974 239.235C466.078 239.021 466.739 236.327 467.051 232.874C467.64 226.503 467.916 204.965 466.622 199.388C463.901 187.637 430.728 170.239 423.804 153.135C419.655 142.892 419.807 123.816 420.628 112.6C424.09 65.2493 504.435 66.1862 504.435 117.981V136.236V136.218Z" fill="white"/>
+          <path d="M249.55 249.291L303.914 243.054V225.245L338.676 224.353V301.362C338.676 301.46 339.916 302.7 340.014 302.7H367.192V336.534C366.674 336.534 305.458 336.552 303.914 336.534V278.663L212.121 288.46V81.024H249.55V249.3V249.291Z" fill="white"/>
+          <path d="M585.531 114.849H565.483L564.153 250.603L556.123 251.459V335.651H522.254V255.055C524.939 254.769 526.269 254.627 528.526 254.386L527.152 114.849H507.104V81.0152H585.531V114.849Z" fill="white"/>
+          <path d="M310.152 0V168.713C310.152 168.811 311.393 170.051 311.491 170.051H367.193V205.661H273.615V0H310.152Z" fill="white"/>
+          <path d="M683.559 194.258V153.581C683.559 143.356 672.888 143.356 672.888 153.608L672.478 239.102L636.324 242.938V150.021C636.324 92.3465 720.989 91.3918 720.989 152.483V194.07" fill="white"/>
+          <path d="M720.999 315.174V348.115H668.268C650.638 348.115 636.335 333.821 636.335 316.182V291.288C635.202 291.824 635.148 291.851 633.658 292.466V336.534H599.789V268.483C599.789 268.483 666.618 261.363 672.872 260.72C672.872 260.72 673.015 291.378 673.077 306.706C673.095 311.382 676.896 315.165 681.572 315.165H720.991L720.999 315.174Z" fill="white"/>
+          <path d="M412.633 81.024V266.707L376.988 270.49V81.024H412.633Z" fill="white"/>
+          <path d="M626.814 243.929C620.881 244.571 614.064 245.276 591.16 247.765L591.606 81.0152H626.805C626.805 81.7647 626.805 243.929 626.805 243.929H626.814Z" fill="white"/>
+          <path d="M281.625 302.289V336.542C281.625 336.542 215.501 336.533 214.787 336.542V309.391L281.625 302.289Z" fill="white"/>
+          <path d="M47.6811 122.103C64.4998 122.103 80.7117 133.461 85.2978 150.413C88.7597 163.208 88.7775 205.304 84.468 217.616C81.8895 224.995 79.5697 225.861 74.5464 230.652C72.4318 232.669 75.4743 232.437 77.0982 233.356C85.8242 238.316 95.7994 248.167 100.867 256.83C103.392 261.14 107.051 268.483 109.406 274.488L132.845 62.4922H185.335L207.713 288.96L110.191 300.282C109.7 302.022 105.364 316.557 104.062 319.983C91.0171 354.379 63.8485 361.864 30.2111 362.444C20.227 362.614 9.68077 362.489 0 362.489V122.103H47.6811ZM150.618 192.438H166.661C164.35 162.102 158.202 102.509 158.202 102.509L150.618 192.438ZM36.5371 218.259C46.4766 218.259 49.0998 213.039 49.0998 203.341V165.813C49.0998 155.544 38.9104 155.49 36.5371 155.49V218.259ZM169.284 222.756H148.879L143.49 263.656L172.844 260.943L169.284 222.756ZM36.5371 250.834V329.101C39.8473 329.101 46.3249 328.655 48.1719 328.272C80.6047 321.509 85.8421 274.871 60.0029 256.705C53.4807 252.119 43.7107 250.834 36.5371 250.834Z" fill="white"/>
+          <path d="M175.905 362.489L170.453 314.112L202.36 310.721C203.992 320.358 209.578 358.519 209.836 362.498C206.473 362.489 179.313 362.489 175.914 362.489H175.905Z" fill="white"/>
+          <path d="M412.633 288.371V336.534C411.634 336.534 377.631 336.534 376.988 336.534V292.154L412.633 288.371Z" fill="white"/>
+          <path d="M271.734 413.766H280.274C281.534 413.766 282.747 413.673 283.914 413.486C285.081 413.299 286.107 412.949 286.994 412.436C287.881 411.876 288.581 411.106 289.094 410.126C289.654 409.146 289.934 407.863 289.934 406.276C289.934 404.689 289.654 403.406 289.094 402.426C288.581 401.446 287.881 400.699 286.994 400.186C286.107 399.626 285.081 399.253 283.914 399.066C282.747 398.879 281.534 398.786 280.274 398.786H271.734V413.766ZM260.744 390.246H283.284C286.411 390.246 289.071 390.713 291.264 391.646C293.457 392.533 295.231 393.723 296.584 395.216C297.984 396.709 298.987 398.413 299.594 400.326C300.247 402.239 300.574 404.223 300.574 406.276C300.574 408.283 300.247 410.266 299.594 412.226C298.987 414.139 297.984 415.843 296.584 417.336C295.231 418.829 293.457 420.043 291.264 420.976C289.071 421.863 286.411 422.306 283.284 422.306H271.734V440.226H260.744V390.246ZM307.434 390.246H318.424V440.226H307.434V390.246ZM324.858 431.546L351.668 399.486H326.958V390.246H366.298V398.926L339.488 430.986H366.998V440.226H324.858V431.546ZM370.249 431.546L397.059 399.486H372.349V390.246H411.689V398.926L384.879 430.986H412.389V440.226H370.249V431.546ZM431.459 420.906H444.409L438.109 402.566H437.969L431.459 420.906ZM432.509 390.246H443.779L462.469 440.226H451.059L447.279 429.096H428.589L424.669 440.226H413.609L432.509 390.246Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="quote-label">Catering Quote</span>
+      <div class="quote-meta">
+        February 13, 2026<br>
+        Valid for 14 days
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CLIENT / EVENT INFO ═══ -->
+  <div class="info-section">
+    <div class="info-left">
+      <div class="info-label">Prepared For</div>
+      <div class="client-name">Luke</div>
+      <div class="client-role">Chairman, G Back Giants</div>
+    </div>
+    <div class="info-right">
+      <div class="info-label">Event</div>
+      <div class="event-name">G Back Giants All-Star Basketball</div>
+      <div class="event-detail">
+        February 28, 2026<span class="separator">|</span>Morning<br>
+        Brighton College Bangkok<br>
+        Ring Road<span class="separator">|</span>Pool / Sports Hall Area<br>
+        64–70 guests
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══ LINE ITEMS ═══ -->
+  <div class="table-section">
+    <div class="table-header">
+      <span>Item</span>
+      <span>Qty</span>
+      <span>Unit</span>
+      <span>Subtotal</span>
+    </div>
+
+    <div class="table-row">
+      <span class="item-name">Cheese Pizza (14")</span>
+      <span class="item-qty">10</span>
+      <span class="item-unit">฿435</span>
+      <span class="item-subtotal">฿4,350</span>
+    </div>
+
+    <div class="table-row">
+      <span class="item-name">Pepperoni Pizza (14")</span>
+      <span class="item-qty">9</span>
+      <span class="item-unit">฿550</span>
+      <span class="item-subtotal">฿4,950</span>
+    </div>
+
+    <div class="table-row">
+      <span class="item-name">Hawaiian Pizza (14")</span>
+      <span class="item-qty">5</span>
+      <span class="item-unit">฿500</span>
+      <span class="item-subtotal">฿2,500</span>
+    </div>
+
+    <div class="table-row">
+      <span class="item-name">Food Truck On-Site (transport + setup)</span>
+      <span class="item-qty">1</span>
+      <span class="item-unit">฿5,000</span>
+      <span class="item-subtotal">฿5,000</span>
+    </div>
+
+    <div class="table-row">
+      <span class="item-name">French Fries — Branded Cones (~70 servings)</span>
+      <span class="item-qty item-comp">—</span>
+      <span class="item-unit item-comp">—</span>
+      <span class="item-free">FREE</span>
+    </div>
+  </div>
+
+  <!-- ═══ TOTAL ═══ -->
+  <div class="total-section">
+    <div class="total-line">
+      <span class="total-label">Total</span>
+      <span class="total-amount">฿16,800</span>
+    </div>
+  </div>
+
+  <!-- ═══ WHAT'S INCLUDED ═══ -->
+  <div class="included-section">
+    <div class="included-title">What's Included</div>
+    <div class="included-items">
+      <div class="included-item">
+        <span class="bullet">•</span>
+        <span>24 × 14" pizzas (192 slices — sized for 64–70 hungry athletes + parents)</span>
+      </div>
+      <div class="included-item">
+        <span class="bullet">•</span>
+        <span>~70 branded fry cones, freshly made on-site from the truck (complimentary)</span>
+      </div>
+      <div class="included-item">
+        <span class="bullet">•</span>
+        <span>Ballistic food truck on-site with full setup & dedicated service crew</span>
+      </div>
+      <div class="included-item">
+        <span class="bullet">•</span>
+        <span>Setup 60–90 min before service | Served poolside, grab-and-go format</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TERMS ═══ -->
+  <div class="terms-section">
+    <div class="terms-title">Terms</div>
+    <div class="terms-items">
+      <div class="terms-item">Payment due on or before event date — cash or bank transfer</div>
+      <div class="terms-item">Pizza count adjustable up to 48 hours before the event</div>
+      <div class="terms-item">French fries served fresh from the truck throughout the event</div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    <div class="footer-left">
+      <span class="footer-text">Ballistic Pizza<span class="sep">|</span>Bangkok, Thailand</span>
+      <span class="footer-text">Russell<span class="sep">|</span>CEO & Founder</span>
+    </div>
+    <div class="footer-logo">
+      <!-- Faded white logo mark -->
+      <svg width="60" height="38" viewBox="0 0 721 452" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.35">
+        <path d="M504.435 136.218H467.898V115.295C467.997 111.137 465.748 110.004 464.633 109.638C453.239 105.9 455.229 130.9 457.441 136.432C461.117 145.631 486.591 161.923 494.612 171.417C506.969 186.04 505.747 211.674 504.48 230.188C503.695 241.725 498.904 256.545 486.725 260.48C488.652 262.407 491.623 264.825 494.478 270.374C502.258 285.48 502.348 311.417 490.151 323.614C474.778 338.988 425.276 336.552 421.556 336.552C421.556 336.552 421.618 311.266 421.618 310.73H446.065C450.268 310.784 455.862 309.579 458.119 308.571C471.235 302.718 473.948 287.63 460.805 280.876C453.471 277.102 421.556 270.062 421.556 259.543V224.371H456.317C456.629 229.412 454.185 239.637 461.974 239.235C466.078 239.021 466.739 236.327 467.051 232.874C467.64 226.503 467.916 204.965 466.622 199.388C463.901 187.637 430.728 170.239 423.804 153.135C419.655 142.892 419.807 123.816 420.628 112.6C424.09 65.2493 504.435 66.1862 504.435 117.981V136.236V136.218Z" fill="white"/>
+        <path d="M249.55 249.291L303.914 243.054V225.245L338.676 224.353V301.362C338.676 301.46 339.916 302.7 340.014 302.7H367.192V336.534C366.674 336.534 305.458 336.552 303.914 336.534V278.663L212.121 288.46V81.024H249.55V249.3V249.291Z" fill="white"/>
+        <path d="M585.531 114.849H565.483L564.153 250.603L556.123 251.459V335.651H522.254V255.055C524.939 254.769 526.269 254.627 528.526 254.386L527.152 114.849H507.104V81.0152H585.531V114.849Z" fill="white"/>
+        <path d="M310.152 0V168.713C310.152 168.811 311.393 170.051 311.491 170.051H367.193V205.661H273.615V0H310.152Z" fill="white"/>
+        <path d="M683.559 194.258V153.581C683.559 143.356 672.888 143.356 672.888 153.608L672.478 239.102L636.324 242.938V150.021C636.324 92.3465 720.989 91.3918 720.989 152.483V194.07" fill="white"/>
+        <path d="M720.999 315.174V348.115H668.268C650.638 348.115 636.335 333.821 636.335 316.182V291.288C635.202 291.824 635.148 291.851 633.658 292.466V336.534H599.789V268.483C599.789 268.483 666.618 261.363 672.872 260.72C672.872 260.72 673.015 291.378 673.077 306.706C673.095 311.382 676.896 315.165 681.572 315.165H720.991L720.999 315.174Z" fill="white"/>
+        <path d="M412.633 81.024V266.707L376.988 270.49V81.024H412.633Z" fill="white"/>
+        <path d="M626.814 243.929C620.881 244.571 614.064 245.276 591.16 247.765L591.606 81.0152H626.805C626.805 81.7647 626.805 243.929 626.805 243.929H626.814Z" fill="white"/>
+        <path d="M281.625 302.289V336.542C281.625 336.542 215.501 336.533 214.787 336.542V309.391L281.625 302.289Z" fill="white"/>
+        <path d="M47.6811 122.103C64.4998 122.103 80.7117 133.461 85.2978 150.413C88.7597 163.208 88.7775 205.304 84.468 217.616C81.8895 224.995 79.5697 225.861 74.5464 230.652C72.4318 232.669 75.4743 232.437 77.0982 233.356C85.8242 238.316 95.7994 248.167 100.867 256.83C103.392 261.14 107.051 268.483 109.406 274.488L132.845 62.4922H185.335L207.713 288.96L110.191 300.282C109.7 302.022 105.364 316.557 104.062 319.983C91.0171 354.379 63.8485 361.864 30.2111 362.444C20.227 362.614 9.68077 362.489 0 362.489V122.103H47.6811ZM150.618 192.438H166.661C164.35 162.102 158.202 102.509 158.202 102.509L150.618 192.438ZM36.5371 218.259C46.4766 218.259 49.0998 213.039 49.0998 203.341V165.813C49.0998 155.544 38.9104 155.49 36.5371 155.49V218.259ZM169.284 222.756H148.879L143.49 263.656L172.844 260.943L169.284 222.756ZM36.5371 250.834V329.101C39.8473 329.101 46.3249 328.655 48.1719 328.272C80.6047 321.509 85.8421 274.871 60.0029 256.705C53.4807 252.119 43.7107 250.834 36.5371 250.834Z" fill="white"/>
+        <path d="M175.905 362.489L170.453 314.112L202.36 310.721C203.992 320.358 209.578 358.519 209.836 362.498C206.473 362.489 179.313 362.489 175.914 362.489H175.905Z" fill="white"/>
+        <path d="M412.633 288.371V336.534C411.634 336.534 377.631 336.534 376.988 336.534V292.154L412.633 288.371Z" fill="white"/>
+        <path d="M271.734 413.766H280.274C281.534 413.766 282.747 413.673 283.914 413.486C285.081 413.299 286.107 412.949 286.994 412.436C287.881 411.876 288.581 411.106 289.094 410.126C289.654 409.146 289.934 407.863 289.934 406.276C289.934 404.689 289.654 403.406 289.094 402.426C288.581 401.446 287.881 400.699 286.994 400.186C286.107 399.626 285.081 399.253 283.914 399.066C282.747 398.879 281.534 398.786 280.274 398.786H271.734V413.766ZM260.744 390.246H283.284C286.411 390.246 289.071 390.713 291.264 391.646C293.457 392.533 295.231 393.723 296.584 395.216C297.984 396.709 298.987 398.413 299.594 400.326C300.247 402.239 300.574 404.223 300.574 406.276C300.574 408.283 300.247 410.266 299.594 412.226C298.987 414.139 297.984 415.843 296.584 417.336C295.231 418.829 293.457 420.043 291.264 420.976C289.071 421.863 286.411 422.306 283.284 422.306H271.734V440.226H260.744V390.246ZM307.434 390.246H318.424V440.226H307.434V390.246ZM324.858 431.546L351.668 399.486H326.958V390.246H366.298V398.926L339.488 430.986H366.998V440.226H324.858V431.546ZM370.249 431.546L397.059 399.486H372.349V390.246H411.689V398.926L384.879 430.986H412.389V440.226H370.249V431.546ZM431.459 420.906H444.409L438.109 402.566H437.969L431.459 420.906ZM432.509 390.246H443.779L462.469 440.226H451.059L447.279 429.096H428.589L424.669 440.226H413.609L432.509 390.246Z" fill="white"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<!-- Spec reference note -->
+<div class="spec-note">
+  <strong>Figma Build Specs</strong><br>
+  Frame: 595 × 842 (A4)<br>
+  Font: Work Sans (Aeonik for headers if available)<br>
+  Blackout: #1A1919<br>
+  Pink Tomato: #F26F65<br>
+  Portal Green: #71AE5E<br>
+  Padding: 32px sides
+</div>
+
+</body>
+</html>
