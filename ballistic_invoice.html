@@ -43,9 +43,14 @@
     width: 595px;
     min-height: 842px;
     background: var(--supernova-white);
-    position: relative;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     box-shadow: 0 4px 40px rgba(0,0,0,0.15);
+  }
+
+  .page-content {
+    flex: 1;
   }
 
   .header {
@@ -298,16 +303,18 @@
     line-height: 1.5;
   }
 
+  .signature-section {
+    padding: 20px 32px 24px;
+  }
+
   .footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     background: var(--blackout);
     padding: 14px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    margin-top: auto;
   }
 
   .footer::before {
@@ -336,12 +343,24 @@
     color: var(--gray-600);
     margin: 0 6px;
   }
+
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+    }
+    .page {
+      box-shadow: none;
+      width: 100%;
+    }
+  }
 </style>
 </head>
 
 <body>
 
 <div class="page">
+  <div class="page-content">
 
   <div class="header">
     <div class="header-left">
@@ -466,7 +485,7 @@
     </div>
 
     <div class="table-row">
-      <span class="item-name">Fin’s Bacon Supreme (14")</span>
+      <span class="item-name">Fin's Bacon Supreme (14")</span>
       <span class="item-qty">2</span>
       <span class="item-unit">฿610</span>
       <span class="item-subtotal">฿1,220</span>
@@ -522,11 +541,12 @@
       <div class="terms-item">Tax ID: 0105568074738</div>
       <div class="terms-item">19/132 Sukhumvit Suite Building, 13th Floor, Soi Sukhumvit 13, Sukhumvit Road, Klongtoey Nua, Watthana, Bangkok 10110, Thailand</div>
       <div class="terms-item">Phone: 092-505-1551 | Email: billing@ballisticpizza.com</div>
-      <div class="terms-item">Amount before VAT: ฿7,342.99</div> <div class="terms-item">VAT 7%: ฿514.01</div>
+      <div class="terms-item">Amount before VAT: ฿7,342.99</div>
+      <div class="terms-item">VAT 7%: ฿514.01</div>
     </div>
   </div>
 
-  <div class="terms-section">
+  <div class="signature-section">
     <div class="terms-title">Authorized Signatory</div>
     <div class="terms-items">
       <div class="terms-item">
@@ -536,6 +556,8 @@
       </div>
     </div>
   </div>
+
+  </div><!-- end page-content -->
 
   <div class="footer">
     <div class="footer-left">
