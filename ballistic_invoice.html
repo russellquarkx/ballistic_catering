@@ -1,572 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ballistic Pizza — Tax Invoice</title>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --blackout: #1A1919;
-    --supernova-white: #F9F9F9;
-    --pink-tomato: #F26F65;
-    --portal-green: #71AE5E;
-    --cold-ice: #97DDE4;
-    --warm-cheese: #FBDC8A;
-    --gold: #E7B632;
-    --blue: #44A6B0;
-    --green-dark: #48BD32;
-    --gray-600: #666666;
-    --gray-400: #999999;
-    --gray-200: #E0E0E0;
-    --gray-100: #F0F0F0;
-    --gray-50: #F7F7F7;
-    --font-body: 'Work Sans', -apple-system, sans-serif;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ballistic Pizza — Tax Invoice</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    background: #E0E0E0;
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px;
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .page {
-    width: 595px;
-    min-height: 842px;
-    background: var(--supernova-white);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 4px 40px rgba(0,0,0,0.15);
-  }
-
-  .page-content {
-    flex: 1;
-  }
-
-  .header {
-    background: var(--blackout);
-    padding: 24px 32px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
-  }
-
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--pink-tomato);
-  }
-
-  .header-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0;
-  }
-
-  .logo-container img {
-    height: 52px;
-    width: auto;
-  }
-
-  .header-right {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding-top: 4px;
-  }
-
-  .quote-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: var(--pink-tomato);
-    text-transform: uppercase;
-  }
-
-  .quote-meta {
-    font-size: 9px;
-    color: var(--gray-400);
-    font-weight: 400;
-    line-height: 1.6;
-  }
-
-  .info-section {
-    padding: 24px 32px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-  }
-
-  .info-label {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .info-left .client-name {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--blackout);
-    letter-spacing: -0.3px;
-    margin-bottom: 2px;
-  }
-
-  .info-left .client-role {
-    font-size: 10px;
-    color: var(--gray-600);
-    font-weight: 400;
-    line-height: 1.6;
-  }
-
-  .info-right {
-    text-align: right;
-    max-width: 255px;
-  }
-
-  .info-right .event-name {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--blackout);
-    margin-bottom: 4px;
-  }
-
-  .info-right .event-detail {
-    font-size: 9.5px;
-    color: var(--gray-600);
-    font-weight: 400;
-    line-height: 1.7;
-  }
-
-  .event-detail .separator {
-    color: var(--gray-200);
-    margin: 0 4px;
-  }
-
-  .divider {
-    margin: 0 32px;
-    border: none;
-    border-top: 1px solid var(--gray-200);
-  }
-
-  .table-section {
-    padding: 20px 32px 0;
-  }
-
-  .table-header {
-    display: grid;
-    grid-template-columns: 1fr 50px 80px 90px;
-    gap: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1.5px solid var(--blackout);
-    margin-bottom: 4px;
-  }
-
-  .table-header span {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: var(--gray-400);
-    text-transform: uppercase;
-  }
-
-  .table-header span:last-child {
-    text-align: right;
-  }
-
-  .table-row {
-    display: grid;
-    grid-template-columns: 1fr 50px 80px 90px;
-    gap: 8px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray-100);
-    align-items: center;
-  }
-
-  .table-row:last-child {
-    border-bottom: none;
-  }
-
-  .item-name {
-    font-size: 10.5px;
-    font-weight: 500;
-    color: var(--blackout);
-  }
-
-  .item-qty, .item-unit {
-    font-size: 10.5px;
-    color: var(--gray-600);
-    font-weight: 400;
-  }
-
-  .item-subtotal {
-    font-size: 10.5px;
-    color: var(--blackout);
-    font-weight: 500;
-    text-align: right;
-  }
-
-  .item-free {
-    font-size: 10.5px;
-    font-weight: 700;
-    color: var(--portal-green);
-    text-align: right;
-    letter-spacing: 0.5px;
-  }
-
-  .item-comp {
-    color: var(--gray-400);
-    font-style: italic;
-  }
-
-  .total-section {
-    padding: 8px 32px 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .total-line {
-    display: flex;
-    align-items: baseline;
-    gap: 24px;
-    padding-top: 12px;
-    border-top: 2px solid var(--blackout);
-    min-width: 240px;
-    justify-content: space-between;
-  }
-
-  .total-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: var(--blackout);
-    text-transform: uppercase;
-  }
-
-  .total-amount {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--blackout);
-    letter-spacing: -0.5px;
-  }
-
-  .terms-section {
-    padding: 20px 32px 0;
-  }
-
-  .terms-title {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
-    color: var(--blackout);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .terms-items {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .terms-item {
-    font-size: 9px;
-    color: var(--gray-600);
-    font-weight: 400;
-    line-height: 1.5;
-  }
-
-  .signature-section {
-    padding: 20px 32px 24px;
-  }
-
-  .footer {
-    background: var(--blackout);
-    padding: 14px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    margin-top: auto;
-  }
-
-  .footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--pink-tomato);
-  }
-
-  .footer-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .footer-text {
-    font-size: 8px;
-    color: var(--gray-400);
-    font-weight: 400;
-  }
-
-  .footer-text .sep {
-    color: var(--gray-600);
-    margin: 0 6px;
-  }
-
-  @media print {
     body {
-      background: white;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      background: #fff;
+      line-height: 1.22;
+      font-size: 11px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .invoice {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
       padding: 0;
     }
-    .page {
-      box-shadow: none;
-      width: 100%;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 10px;
     }
-  }
-</style>
+
+    .title-block h1 {
+      margin: 0 0 3px 0;
+      font-size: 20px;
+      line-height: 1.05;
+    }
+
+    .title-block .sub {
+      font-size: 11px;
+      color: #444;
+      margin: 0;
+    }
+
+    .meta {
+      text-align: right;
+      font-size: 10.5px;
+      line-height: 1.25;
+    }
+
+    .meta div {
+      margin-bottom: 2px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .box {
+      border: 1px solid #d9d9d9;
+      padding: 8px 9px;
+      border-radius: 4px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .box h3 {
+      margin: 0 0 5px 0;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #666;
+    }
+
+    .box p {
+      margin: 0 0 2px 0;
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      font-size: 10.5px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 6px 6px;
+      border-bottom: 1.5px solid #111;
+      font-size: 10px;
+    }
+
+    tbody td {
+      padding: 5px 6px;
+      border-bottom: 1px solid #e6e6e6;
+      vertical-align: top;
+    }
+
+    th.num,
+    td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .totals {
+      width: 280px;
+      margin-left: auto;
+      margin-bottom: 10px;
+      font-size: 10.5px;
+    }
+
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 4px 0;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .totals-row.final {
+      font-weight: 700;
+      font-size: 13px;
+      border-bottom: 2px solid #111;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .company-details {
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      padding: 8px 9px;
+      font-size: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .company-details h3 {
+      margin: 0 0 5px 0;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #666;
+    }
+
+    .company-details p {
+      margin: 0 0 3px 0;
+    }
+
+    .signatory {
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      padding: 8px 9px;
+      font-size: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .signatory h3 {
+      margin: 0 0 14px 0;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #666;
+    }
+
+    .signature-line {
+      border-top: 1px solid #111;
+      margin-top: 26px;
+      padding-top: 5px;
+    }
+
+    .muted {
+      color: #555;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    @media print {
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+      }
+
+      .invoice {
+        max-width: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="page">
-  <div class="page-content">
-
-  <div class="header">
-    <div class="header-left">
-      <div class="logo-container">
-        <svg width="180" height="52" viewBox="0 0 721 452" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M504.435 136.218H467.898V115.295C467.997 111.137 465.748 110.004 464.633 109.638C453.239 105.9 455.229 130.9 457.441 136.432C461.117 145.631 486.591 161.923 494.612 171.417C506.969 186.04 505.747 211.674 504.48 230.188C503.695 241.725 498.904 256.545 486.725 260.48C488.652 262.407 491.623 264.825 494.478 270.374C502.258 285.48 502.348 311.417 490.151 323.614C474.778 338.988 425.276 336.552 421.556 336.552C421.556 336.552 421.618 311.266 421.618 310.73H446.065C450.268 310.784 455.862 309.579 458.119 308.571C471.235 302.718 473.948 287.63 460.805 280.876C453.471 277.102 421.556 270.062 421.556 259.543V224.371H456.317C456.629 229.412 454.185 239.637 461.974 239.235C466.078 239.021 466.739 236.327 467.051 232.874C467.64 226.503 467.916 204.965 466.622 199.388C463.901 187.637 430.728 170.239 423.804 153.135C419.655 142.892 419.807 123.816 420.628 112.6C424.09 65.2493 504.435 66.1862 504.435 117.981V136.236V136.218Z" fill="white"/>
-          <path d="M249.55 249.291L303.914 243.054V225.245L338.676 224.353V301.362C338.676 301.46 339.916 302.7 340.014 302.7H367.192V336.534C366.674 336.534 305.458 336.552 303.914 336.534V278.663L212.121 288.46V81.024H249.55V249.3V249.291Z" fill="white"/>
-          <path d="M585.531 114.849H565.483L564.153 250.603L556.123 251.459V335.651H522.254V255.055C524.939 254.769 526.269 254.627 528.526 254.386L527.152 114.849H507.104V81.0152H585.531V114.849Z" fill="white"/>
-          <path d="M310.152 0V168.713C310.152 168.811 311.393 170.051 311.491 170.051H367.193V205.661H273.615V0H310.152Z" fill="white"/>
-          <path d="M683.559 194.258V153.581C683.559 143.356 672.888 143.356 672.888 153.608L672.478 239.102L636.324 242.938V150.021C636.324 92.3465 720.989 91.3918 720.989 152.483V194.07" fill="white"/>
-          <path d="M720.999 315.174V348.115H668.268C650.638 348.115 636.335 333.821 636.335 316.182V291.288C635.202 291.824 635.148 291.851 633.658 292.466V336.534H599.789V268.483C599.789 268.483 666.618 261.363 672.872 260.72C672.872 260.72 673.015 291.378 673.077 306.706C673.095 311.382 676.896 315.165 681.572 315.165H720.991L720.999 315.174Z" fill="white"/>
-          <path d="M412.633 81.024V266.707L376.988 270.49V81.024H412.633Z" fill="white"/>
-          <path d="M626.814 243.929C620.881 244.571 614.064 245.276 591.16 247.765L591.606 81.0152H626.805C626.805 81.7647 626.805 243.929 626.805 243.929H626.814Z" fill="white"/>
-          <path d="M281.625 302.289V336.542C281.625 336.542 215.501 336.533 214.787 336.542V309.391L281.625 302.289Z" fill="white"/>
-          <path d="M47.6811 122.103C64.4998 122.103 80.7117 133.461 85.2978 150.413C88.7597 163.208 88.7775 205.304 84.468 217.616C81.8895 224.995 79.5697 225.861 74.5464 230.652C72.4318 232.669 75.4743 232.437 77.0982 233.356C85.8242 238.316 95.7994 248.167 100.867 256.83C103.392 261.14 107.051 268.483 109.406 274.488L132.845 62.4922H185.335L207.713 288.96L110.191 300.282C109.7 302.022 105.364 316.557 104.062 319.983C91.0171 354.379 63.8485 361.864 30.2111 362.444C20.227 362.614 9.68077 362.489 0 362.489V122.103H47.6811ZM150.618 192.438H166.661C164.35 162.102 158.202 102.509 158.202 102.509L150.618 192.438ZM36.5371 218.259C46.4766 218.259 49.0998 213.039 49.0998 203.341V165.813C49.0998 155.544 38.9104 155.49 36.5371 155.49V218.259ZM169.284 222.756H148.879L143.49 263.656L172.844 260.943L169.284 222.756ZM36.5371 250.834V329.101C39.8473 329.101 46.3249 328.655 48.1719 328.272C80.6047 321.509 85.8421 274.871 60.0029 256.705C53.4807 252.119 43.7107 250.834 36.5371 250.834Z" fill="white"/>
-          <path d="M175.905 362.489L170.453 314.112L202.36 310.721C203.992 320.358 209.578 358.519 209.836 362.498C206.473 362.489 179.313 362.489 175.914 362.489H175.905Z" fill="white"/>
-          <path d="M412.633 288.371V336.534C411.634 336.534 377.631 336.534 376.988 336.534V292.154L412.633 288.371Z" fill="white"/>
-          <path d="M271.734 413.766H280.274C281.534 413.766 282.747 413.673 283.914 413.486C285.081 413.299 286.107 412.949 286.994 412.436C287.881 411.876 288.581 411.106 289.094 410.126C289.654 409.146 289.934 407.863 289.934 406.276C289.934 404.689 289.654 403.406 289.094 402.426C288.581 401.446 287.881 400.699 286.994 400.186C286.107 399.626 285.081 399.253 283.914 399.066C282.747 398.879 281.534 398.786 280.274 398.786H271.734V413.766ZM260.744 390.246H283.284C286.411 390.246 289.071 390.713 291.264 391.646C293.457 392.533 295.231 393.723 296.584 395.216C297.984 396.709 298.987 398.413 299.594 400.326C300.247 402.239 300.574 404.223 300.574 406.276C300.574 408.283 300.247 410.266 299.594 412.226C298.987 414.139 297.984 415.843 296.584 417.336C295.231 418.829 293.457 420.043 291.264 420.976C289.071 421.863 286.411 422.306 283.284 422.306H271.734V440.226H260.744V390.246ZM307.434 390.246H318.424V440.226H307.434V390.246ZM324.858 431.546L351.668 399.486H326.958V390.246H366.298V398.926L339.488 430.986H366.998V440.226H324.858V431.546ZM370.249 431.546L397.059 399.486H372.349V390.246H411.689V398.926L384.879 430.986H412.389V440.226H370.249V431.546ZM431.459 420.906H444.409L438.109 402.566H437.969L431.459 420.906ZM432.509 390.246H443.779L462.469 440.226H451.059L447.279 429.096H428.589L424.669 440.226H413.609L432.509 390.246Z" fill="white"/>
-        </svg>
+  <div class="invoice">
+    <div class="header">
+      <div class="title-block">
+        <h1>ใบกำกับภาษี / Tax Invoice</h1>
+        <p class="sub">Ballistic Pizza — Bangkok, Thailand</p>
       </div>
-    </div>
-    <div class="header-right">
-      <span class="quote-label">ใบกำกับภาษี / Tax Invoice</span>
-      <div class="quote-meta">
-        Invoice No. INV-2026-04-001<br>
-        April 2, 2026
-      </div>
-    </div>
-  </div>
-
-  <div class="info-section">
-    <div class="info-left">
-      <div class="info-label">From</div>
-      <div class="client-name">Ballistic Thailand Co., Ltd.</div>
-      <div class="client-role">
-        บริษัท บาลลิซติก (ไทยแลนด์) จำกัด (สำนักงานใหญ่)<br>
-        TAX ID: 0105568074738
+      <div class="meta">
+        <div><span class="label">Invoice No.</span> INV-2026-04-001</div>
+        <div><span class="label">Date</span> April 2, 2026</div>
       </div>
     </div>
 
-    <div class="info-right">
-      <div class="info-label">Bill To</div>
-      <div class="event-name">Grey Alchemy Co., Ltd.</div>
-      <div class="event-detail">
-        บริษัท เกรย์ อัลเชมี่ จำกัด (สำนักงานใหญ่)<br>
-        TAX ID: 0105556103983<br>
-        725/4 ซอยทองหล่อ 27 สุขุมวิท 55<br>
-        แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110
+    <div class="grid-2">
+      <div class="box">
+        <h3>From</h3>
+        <p><strong>Ballistic Thailand Co., Ltd.</strong></p>
+        <p>บริษัท บาลลิซติก (ไทยแลนด์) จำกัด (สำนักงานใหญ่)</p>
+        <p><span class="label">Tax ID:</span> 0105568074738</p>
+      </div>
+
+      <div class="box">
+        <h3>Bill To</h3>
+        <p><strong>Grey Alchemy Co., Ltd.</strong></p>
+        <p>บริษัท เกรย์ อัลเชมี่ จำกัด (สำนักงานใหญ่)</p>
+        <p><span class="label">Tax ID:</span> 0105556103983</p>
+        <p>725/4 ซอยทองหล่อ 27 สุขุมวิท 55</p>
+        <p>แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="box">
+        <h3>Delivery</h3>
+        <p><strong>Scheduled Delivery</strong></p>
+        <p>Thursday, April 2 | 19:00</p>
+        <p>Soi Thonglor 27, Bangkok</p>
+        <p>Contact: K. Play (094-829-5628)</p>
+      </div>
+
+      <div class="box">
+        <h3>Business Type</h3>
+        <p>Food &amp; Beverage</p>
+        <p>Restaurant Operations</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th class="num">Qty</th>
+          <th class="num">Unit</th>
+          <th class="num">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Premium Seafood (14")</td><td class="num">2</td><td class="num">฿600</td><td class="num">฿1,200</td></tr>
+        <tr><td>TVPP — Tomato, Vodka, Pesto, Pepperoni (14")</td><td class="num">1</td><td class="num">฿610</td><td class="num">฿610</td></tr>
+        <tr><td>White Pie with 6 Cheeses (14")</td><td class="num">2</td><td class="num">฿560</td><td class="num">฿1,120</td></tr>
+        <tr><td>All The Meats (14")</td><td class="num">2</td><td class="num">฿610</td><td class="num">฿1,220</td></tr>
+        <tr><td>Authentic American Pepperoni (14")</td><td class="num">2</td><td class="num">฿550</td><td class="num">฿1,100</td></tr>
+        <tr><td>Hawaiian (14")</td><td class="num">2</td><td class="num">฿500</td><td class="num">฿1,000</td></tr>
+        <tr><td>Fin's Bacon Supreme (14")</td><td class="num">2</td><td class="num">฿610</td><td class="num">฿1,220</td></tr>
+        <tr><td>Ranch Sauce</td><td class="num">3</td><td class="num">฿60</td><td class="num">฿180</td></tr>
+        <tr><td>Spicy Vodka Sauce</td><td class="num">3</td><td class="num">฿60</td><td class="num">฿180</td></tr>
+        <tr><td>OG Fries</td><td class="num">6</td><td class="num">฿150</td><td class="num">฿900</td></tr>
+        <tr><td>Delivery</td><td class="num">—</td><td class="num">—</td><td class="num">FREE</td></tr>
+        <tr><td>Preferred Client Discount (10%)</td><td class="num">—</td><td class="num">—</td><td class="num">−฿873</td></tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="totals-row">
+        <span>Amount before VAT</span>
+        <span>฿7,342.99</span>
+      </div>
+      <div class="totals-row">
+        <span>VAT 7%</span>
+        <span>฿514.01</span>
+      </div>
+      <div class="totals-row final">
+        <span>Total (incl. VAT)</span>
+        <span>฿7,857</span>
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div class="company-details">
+        <h3>Company Details</h3>
+        <p><strong>Ballistic Thailand Co., Ltd. (Head Office)</strong> — บริษัท บาลลิซติก (ไทยแลนด์) จำกัด (สำนักงานใหญ่)</p>
+        <p><span class="label">Tax ID:</span> 0105568074738</p>
+        <p>19/132 Sukhumvit Suite Building, 13th Floor, Soi Sukhumvit 13, Sukhumvit Road, Klongtoey Nua, Watthana, Bangkok 10110, Thailand</p>
+        <p><span class="label">Phone:</span> 092-505-1551 | <span class="label">Email:</span> billing@ballisticpizza.com</p>
+      </div>
+
+      <div class="signatory">
+        <h3>Authorized Signatory</h3>
+        <div class="signature-line">
+          <p><strong>Ms. Saifon Sirichotiwanich</strong></p>
+          <p>นางสาวสายฝน ศิริโชติวณิชย์</p>
+          <p class="muted">Ballistic Pizza | Bangkok, Thailand</p>
+          <p class="muted">092-505-1551 | billing@ballisticpizza.com</p>
+        </div>
       </div>
     </div>
   </div>
-
-  <hr class="divider">
-
-  <div class="info-section">
-    <div class="info-left">
-      <div class="info-label">Delivery</div>
-      <div class="client-name" style="font-size: 14px;">Scheduled Delivery</div>
-      <div class="client-role">
-        Thursday, April 2 <span class="separator">|</span> 19:00<br>
-        Soi Thonglor 27, Bangkok<br>
-        Contact: K. Play (094-829-5628)
-      </div>
-    </div>
-    <div class="info-right">
-      <div class="info-label">Business Type</div>
-      <div class="event-name">Food & Beverage</div>
-      <div class="event-detail">Restaurant Operations</div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <div class="table-section">
-    <div class="table-header">
-      <span>Item</span>
-      <span>Qty</span>
-      <span>Unit</span>
-      <span>Subtotal</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Premium Seafood (14")</span>
-      <span class="item-qty">2</span>
-      <span class="item-unit">฿600</span>
-      <span class="item-subtotal">฿1,200</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">TVPP — Tomato, Vodka, Pesto, Pepperoni (14")</span>
-      <span class="item-qty">1</span>
-      <span class="item-unit">฿610</span>
-      <span class="item-subtotal">฿610</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">White Pie with 6 Cheeses (14")</span>
-      <span class="item-qty">2</span>
-      <span class="item-unit">฿560</span>
-      <span class="item-subtotal">฿1,120</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">All The Meats (14")</span>
-      <span class="item-qty">2</span>
-      <span class="item-unit">฿610</span>
-      <span class="item-subtotal">฿1,220</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Authentic American Pepperoni (14")</span>
-      <span class="item-qty">2</span>
-      <span class="item-unit">฿550</span>
-      <span class="item-subtotal">฿1,100</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Hawaiian (14")</span>
-      <span class="item-qty">2</span>
-      <span class="item-unit">฿500</span>
-      <span class="item-subtotal">฿1,000</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Fin's Bacon Supreme (14")</span>
-      <span class="item-qty">2</span>
-      <span class="item-unit">฿610</span>
-      <span class="item-subtotal">฿1,220</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Ranch Sauce</span>
-      <span class="item-qty">3</span>
-      <span class="item-unit">฿60</span>
-      <span class="item-subtotal">฿180</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Spicy Vodka Sauce</span>
-      <span class="item-qty">3</span>
-      <span class="item-unit">฿60</span>
-      <span class="item-subtotal">฿180</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">OG Fries</span>
-      <span class="item-qty">6</span>
-      <span class="item-unit">฿150</span>
-      <span class="item-subtotal">฿900</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Delivery</span>
-      <span class="item-qty item-comp">—</span>
-      <span class="item-unit item-comp">—</span>
-      <span class="item-free">FREE</span>
-    </div>
-
-    <div class="table-row">
-      <span class="item-name">Preferred Client Discount (10%)</span>
-      <span class="item-qty item-comp">—</span>
-      <span class="item-unit item-comp">—</span>
-      <span class="item-subtotal">−฿873</span>
-    </div>
-  </div>
-
-  <div class="total-section">
-    <div class="total-line">
-      <span class="total-label">Total (incl. VAT)</span>
-      <span class="total-amount">฿7,857</span>
-    </div>
-  </div>
-
-  <div class="terms-section">
-    <div class="terms-title">Company Details</div>
-    <div class="terms-items">
-      <div class="terms-item">Ballistic Thailand Co., Ltd. (Head Office) — บริษัท บาลลิซติก (ไทยแลนด์) จำกัด (สำนักงานใหญ่)</div>
-      <div class="terms-item">Tax ID: 0105568074738</div>
-      <div class="terms-item">19/132 Sukhumvit Suite Building, 13th Floor, Soi Sukhumvit 13, Sukhumvit Road, Klongtoey Nua, Watthana, Bangkok 10110, Thailand</div>
-      <div class="terms-item">Phone: 092-505-1551 | Email: billing@ballisticpizza.com</div>
-      <div class="terms-item">Amount before VAT: ฿7,342.99</div>
-      <div class="terms-item">VAT 7%: ฿514.01</div>
-    </div>
-  </div>
-
-  <div class="signature-section">
-    <div class="terms-title">Authorized Signatory</div>
-    <div class="terms-items">
-      <div class="terms-item">
-        _________________________<br>
-        Ms. Saifon Sirichotiwanich<br>
-        นางสาวสายฝน ศิริโชติวณิชย์
-      </div>
-    </div>
-  </div>
-
-  </div><!-- end page-content -->
-
-  <div class="footer">
-    <div class="footer-left">
-      <span class="footer-text">Ballistic Pizza<span class="sep">|</span>Bangkok, Thailand</span>
-      <span class="footer-text">092-505-1551<span class="sep">|</span>billing@ballisticpizza.com</span>
-    </div>
-  </div>
-
-</div>
-
 </body>
 </html>
